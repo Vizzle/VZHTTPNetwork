@@ -8,20 +8,18 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import "VZHTTPNetworkConfig.h"
-
 
 typedef NSString* (^VZHTTPRequestStringGeneratorBlcok)(NSURLRequest* request,NSDictionary* params,NSError *__autoreleasing *error);
+
 @interface VZHTTPRequestGenerator : NSObject
 
-+(instancetype) generator;
-#import "VZHTTPNetworkConfig.h"
-@property(nonatomic,copy) VZHTTPRequestStringGeneratorBlcok queryStringGenerator;
+@property(nonatomic,assign) NSStringEncoding stringEncoding;
+@property(nonatomic,copy)   VZHTTPRequestStringGeneratorBlcok queryStringGenerator;
 
-- (NSURLRequest *)generateRequestWithConfig:(VZHTTPRequestConfig) config
-                                         URLString:(NSString *)aURLString
-                                            Params:(NSDictionary *)aParams;
-
+- (NSURLRequest *)generateRequestWithURLString:(NSString *)aURLString
+                                        Params:(NSDictionary *)aParams
+                                    HTTPMethod:(NSString* )httpMethod
+                               TimeoutInterval:(NSTimeInterval)timeoutInterval;
 
 @end
 

@@ -130,9 +130,21 @@ float const kVZHTTPNetworkAgentThreadRunLoopPriority = 0.3;
     else
     {
         //2, create request
-        NSURLRequest* request = [[VZHTTPRequestGenerator new] generateRequestWithConfig:requestConfig URLString:aURlString Params:aParams];
+        VZHTTPRequestGenerator* generator = [VZHTTPRequestGenerator new];
+        generator.stringEncoding = requestConfig.stringEncoding;
+        NSURLRequest* request = [generator generateRequestWithURLString:aURlString
+                                                                 Params:aParams
+                                                             HTTPMethod:vz_httpMethod(requestConfig.requestMethod)
+                                                        TimeoutInterval:request.timeoutInterval];
+                                 
         VZHTTPConnectionOperation* op = [[VZHTTPConnectionOperation alloc]initWithRequest:request];
-        op.responseParser = [VZHTTPResponseParser parserWithConfig:responseConfig];
+        
+        if (responseConfig.responseType == VZHTTPNetworkResponseTypeJSON) {
+            op.responseParser = [VZHTTPJSONResponseParser new];
+        }
+        else
+            op.responseParser = [VZHTTPXMLResponseParser new];
+
         [op setCompletionHandler:^(VZHTTPConnectionOperation *op, NSString* responseString,id responseObj, NSError *error) {
             
             if (aCallback) {
