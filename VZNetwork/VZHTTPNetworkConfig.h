@@ -109,7 +109,10 @@ static inline NSString* vz_httpMethod(VZHTTPRequestMethod method)
         }
             
         default:
+        {
+            ret = @"GET";
             break;
+        }
     }
     
     return ret;

@@ -202,7 +202,7 @@
                                     HTTPMethod:(NSString* )httpMethod
                                TimeoutInterval:(NSTimeInterval)timeoutInterval
 {
-    NSParameterAssert(aURLString);
+   // NSParameterAssert(aURLString);
     NSURL *url = [NSURL URLWithString:aURLString];
     NSMutableURLRequest *mutableRequest = [[NSMutableURLRequest alloc] initWithURL:url];
     NSString* method = httpMethod.length == 0?@"GET":httpMethod;
@@ -236,6 +236,8 @@
     else
     {
         if ([httpMethod isEqualToString:@"POST"]) {
+            
+            //post请求，默认参数按照JSON方式Encode:
             
             NSError* jsonError=nil;
             NSData* data = [NSJSONSerialization dataWithJSONObject:aParam options:NSJSONWritingPrettyPrinted error:&jsonError];

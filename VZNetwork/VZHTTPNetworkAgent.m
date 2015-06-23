@@ -117,8 +117,8 @@ float const kVZHTTPNetworkAgentThreadRunLoopPriority = 0.3;
 
 // GET
 - (VZHTTPConnectionOperation* )HTTP:(NSString*)aURlString
-                      requestConfig:(VZHTTPRequestConfig) requestConfig
-                     responseConfig:(VZHTTPResponseConfig) responseConfig
+                      requestConfig:(const VZHTTPRequestConfig) requestConfig
+                     responseConfig:(const VZHTTPResponseConfig) responseConfig
                              params:(NSDictionary*)aParams
                   completionHandler:(void(^)(VZHTTPConnectionOperation* connection, NSString* responseString,id responseObj, NSError* error))aCallback
 {
@@ -130,12 +130,13 @@ float const kVZHTTPNetworkAgentThreadRunLoopPriority = 0.3;
     else
     {
         //2, create request
-        VZHTTPRequestGenerator* generator = [VZHTTPRequestGenerator new];
+        VZHTTPRequestGenerator* generator = [[VZHTTPRequestGenerator alloc]init];
         generator.stringEncoding = requestConfig.stringEncoding;
+        
         NSURLRequest* request = [generator generateRequestWithURLString:aURlString
                                                                  Params:aParams
                                                              HTTPMethod:vz_httpMethod(requestConfig.requestMethod)
-                                                        TimeoutInterval:request.timeoutInterval];
+                                                        TimeoutInterval:requestConfig.requestTimeoutSeconds];
                                  
         VZHTTPConnectionOperation* op = [[VZHTTPConnectionOperation alloc]initWithRequest:request];
         

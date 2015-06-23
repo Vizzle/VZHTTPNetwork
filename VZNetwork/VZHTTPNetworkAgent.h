@@ -35,8 +35,8 @@
 
 
 - (VZHTTPConnectionOperation* )HTTP:(NSString*)aURlString
-                      requestConfig:(VZHTTPRequestConfig) requestConfig
-                     responseConfig:(VZHTTPResponseConfig) responseConfig
+                      requestConfig:(const VZHTTPRequestConfig) requestConfig
+                     responseConfig:(const VZHTTPResponseConfig) responseConfig
                              params:(NSDictionary*)aParams
                   completionHandler:(void(^)(VZHTTPConnectionOperation* connection,NSString* responseString,id responseObj, NSError* error))aCallback;
 
